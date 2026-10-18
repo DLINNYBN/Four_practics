@@ -1,4 +1,3 @@
-
 import csv
 import os
 
@@ -68,9 +67,7 @@ def delete_employee(employees):
         if number < 1 or number > len(employees):
             raise ValueError("Сотрудника с таким номером нет.")
         deleted = employees.pop(number - 1)
-        print(
-            f"Сотрудник {deleted['Имя']} {deleted['Фамилия']} удалён."
-        )
+        print(f"Сотрудник {deleted['Имя']} {deleted['Фамилия']} удалён.")
     except ValueError as error:
         print("Ошибка:", error)
 
@@ -107,9 +104,7 @@ def filter_employees(employees):
     elif choice == "2":
         value = input("Введите отдел: ").strip().casefold()
         result = [
-            employee
-            for employee in employees
-            if employee["Отдел"].casefold() == value
+            employee for employee in employees if employee["Отдел"].casefold() == value
         ]
     else:
         print("Неверный пункт меню.")
@@ -124,12 +119,8 @@ def filter_employees(employees):
 def save_to_csv(employees):
     """Сохранение сотрудников в CSV-файл."""
     try:
-        with open(
-            FILE_NAME, "w", newline="", encoding="utf-8-sig"
-        ) as file:
-            writer = csv.DictWriter(
-                file, fieldnames=FIELDS, delimiter=";"
-            )
+        with open(FILE_NAME, "w", newline="", encoding="utf-8-sig") as file:
+            writer = csv.DictWriter(file, fieldnames=FIELDS, delimiter=";")
             writer.writeheader()
             writer.writerows(employees)
         print("Данные сохранены в файл", FILE_NAME)
@@ -141,14 +132,10 @@ def load_from_csv():
     """Загрузка сотрудников из CSV-файла."""
     employees = []
     if not os.path.exists(FILE_NAME):
-        print(
-            "Файл пока не существует. Будет создан новый список."
-        )
+        print("Файл пока не существует. Будет создан новый список.")
         return employees
     try:
-        with open(
-            FILE_NAME, "r", newline="", encoding="utf-8-sig"
-        ) as file:
+        with open(FILE_NAME, "r", newline="", encoding="utf-8-sig") as file:
             reader = csv.DictReader(file, delimiter=";")
             if reader.fieldnames != FIELDS:
                 raise ValueError("Неверная структура CSV файла.")
@@ -156,9 +143,7 @@ def load_from_csv():
                 age = int(row["Возраст"])
                 salary = float(row["Оклад"])
                 if age <= 0 or salary < 0:
-                    raise ValueError(
-                        "Некорректные данные сотрудника."
-                    )
+                    raise ValueError("Некорректные данные сотрудника.")
                 employee = {
                     "Имя": row["Имя"],
                     "Фамилия": row["Фамилия"],
