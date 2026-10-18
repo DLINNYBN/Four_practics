@@ -25,10 +25,10 @@ def add_employee(employees):
 
         if not name or not surname or not position or not department:
             raise ValueError("Текстовые поля не должны быть пустыми.")
-        if age <= 0 or salary < 0:
+        if age < 14 or salary < 35220.9:
             raise ValueError(
-                "Возраст должен быть положительным, "
-                "а оклад не может быть отрицательным."
+                "Возраст сотрудника не может быть меньше 14"
+                "а оклад не может быть меньше МРОТ"
             )
 
         employee = {
@@ -97,9 +97,7 @@ def filter_employees(employees):
     if choice == "1":
         value = input("Введите должность: ").strip().casefold()
         result = [
-            employee
-            for employee in employees
-            if employee["Должность"].casefold() == value
+            employee for employee in employees if employee["Должность"].casefold() == value
         ]
     elif choice == "2":
         value = input("Введите отдел: ").strip().casefold()
@@ -142,7 +140,7 @@ def load_from_csv():
             for row in reader:
                 age = int(row["Возраст"])
                 salary = float(row["Оклад"])
-                if age <= 0 or salary < 0:
+                if age < 14 or salary < 35220.9:
                     raise ValueError("Некорректные данные сотрудника.")
                 employee = {
                     "Имя": row["Имя"],
